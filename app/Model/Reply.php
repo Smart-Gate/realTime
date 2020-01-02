@@ -9,6 +9,7 @@ use App\Model\Like;
 
 class Reply extends Model
 {
+    protected $fillable = ['body','user_id'];
     public function question()
     {
         return $this->belongsTo(Question::class);
@@ -17,7 +18,7 @@ class Reply extends Model
     {
         return $this->belongsTo(User::class);
     }
-    public function likes()
+    public function like()
     {
         return $this->hasMany(Like::class);
     }
