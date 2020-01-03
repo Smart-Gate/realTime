@@ -8,7 +8,8 @@ use Illuminate\Notifications\Notifiable;
 use App\Model\Reply;
 use App\Model\Question;
 use App\Model\Like;
-class User extends Authenticatable
+use Tymon\JWTAuth\Contracts\JWTSubject;
+class User extends Authenticatable implements JWTSubject
 {
     use Notifiable;
 
@@ -50,4 +51,22 @@ class User extends Authenticatable
     {
         return $this->hasMany(Reply::class);
     }
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    /**
+     * Return a key value array, containing any custom claims to be added to the JWT.
+     *
+     * @return array
+     */
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
+    public function setPasswordAttribute($value){
+        $this->attributes['password']=bcrypt($value);
+    }
+
 }
